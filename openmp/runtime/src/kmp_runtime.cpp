@@ -1546,7 +1546,7 @@ __kmp_fork_in_teams(ident_t *loc, int gtid, kmp_team_t *parent_team,
                              ,
                              exit_frame_p
 #endif
-                             );
+      );
     }
 
 #if OMPT_SUPPORT
@@ -1742,7 +1742,7 @@ __kmp_serial_fork_call(ident_t *loc, int gtid, enum fork_context_e call_context,
     if (!ap) {
       // revert change made in __kmpc_serialized_parallel()
       master_th->th.th_serial_team->t.t_level--;
-// Get args from parent team for teams construct
+      // Get args from parent team for teams construct
 
 #if OMPT_SUPPORT
       void *dummy;
@@ -1781,7 +1781,7 @@ __kmp_serial_fork_call(ident_t *loc, int gtid, enum fork_context_e call_context,
                                ,
                                exit_frame_p
 #endif
-                               );
+        );
       }
 
 #if OMPT_SUPPORT
@@ -1880,7 +1880,7 @@ __kmp_serial_fork_call(ident_t *loc, int gtid, enum fork_context_e call_context,
                                ,
                                exit_frame_p
 #endif
-                               );
+        );
       }
 
 #if OMPT_SUPPORT
@@ -3297,28 +3297,28 @@ static kmp_internal_control_t __kmp_get_global_icvs(void) {
 
   kmp_internal_control_t g_icvs = {
     0, // int serial_nesting_level; //corresponds to value of th_team_serialized
-    (kmp_int8)__kmp_global.g.g_dynamic, // internal control for dynamic
-    // adjustment of threads (per thread)
-    (kmp_int8)__kmp_env_blocktime, // int bt_set; //internal control for
-    // whether blocktime is explicitly set
-    __kmp_dflt_blocktime, // int blocktime; //internal control for blocktime
+      (kmp_int8)__kmp_global.g.g_dynamic, // internal control for dynamic
+      // adjustment of threads (per thread)
+      (kmp_int8)__kmp_env_blocktime, // int bt_set; //internal control for
+      // whether blocktime is explicitly set
+      __kmp_dflt_blocktime, // int blocktime; //internal control for blocktime
 #if KMP_USE_MONITOR
-    __kmp_bt_intervals, // int bt_intervals; //internal control for blocktime
+      __kmp_bt_intervals, // int bt_intervals; //internal control for blocktime
 // intervals
 #endif
-    __kmp_dflt_team_nth, // int nproc; //internal control for # of threads for
-    // next parallel region (per thread)
-    // (use a max ub on value if __kmp_parallel_initialize not called yet)
-    __kmp_cg_max_nth, // int thread_limit;
-    __kmp_task_max_nth, // int task_thread_limit; // to set the thread_limit
-    // on task. This is used in the case of target thread_limit
-    __kmp_dflt_max_active_levels, // int max_active_levels; //internal control
-    // for max_active_levels
-    r_sched, // kmp_r_sched_t sched; //internal control for runtime schedule
-    // {sched,chunk} pair
+      __kmp_dflt_team_nth, // int nproc; //internal control for # of threads for
+      // next parallel region (per thread)
+      // (use a max ub on value if __kmp_parallel_initialize not called yet)
+      __kmp_cg_max_nth, // int thread_limit;
+      __kmp_task_max_nth, // int task_thread_limit; // to set the thread_limit
+      // on task. This is used in the case of target thread_limit
+      __kmp_dflt_max_active_levels, // int max_active_levels; //internal control
+      // for max_active_levels
+      r_sched, // kmp_r_sched_t sched; //internal control for runtime schedule
+      // {sched,chunk} pair
     __kmp_nested_proc_bind.bind_types[0],
     __kmp_default_device,
-    NULL // struct kmp_internal_control *next;
+      NULL // struct kmp_internal_control *next;
   };
 
   return g_icvs;
@@ -8924,7 +8924,7 @@ __kmp_determine_reduction_method(
 
 #if KMP_ARCH_X86_64 || KMP_ARCH_PPC64 || KMP_ARCH_AARCH64 ||                   \
     KMP_ARCH_MIPS64 || KMP_ARCH_RISCV64 || KMP_ARCH_LOONGARCH64 ||             \
-    KMP_ARCH_VE || KMP_ARCH_S390X || KMP_ARCH_WASM
+    KMP_ARCH_VE || KMP_ARCH_S390X || KMP_ARCH_WASM64
 
 #if KMP_OS_LINUX || KMP_OS_DRAGONFLY || KMP_OS_FREEBSD || KMP_OS_NETBSD ||     \
     KMP_OS_OPENBSD || KMP_OS_WINDOWS || KMP_OS_DARWIN || KMP_OS_HAIKU ||       \
@@ -8956,7 +8956,7 @@ __kmp_determine_reduction_method(
        // KMP_OS_HURD || KMP_OS_SOLARIS || KMP_OS_WASI || KMP_OS_AIX
 
 #elif KMP_ARCH_X86 || KMP_ARCH_ARM || KMP_ARCH_AARCH || KMP_ARCH_MIPS ||       \
-    KMP_ARCH_WASM || KMP_ARCH_PPC || KMP_ARCH_AARCH64_32 || KMP_ARCH_SPARC
+    KMP_ARCH_WASM32 || KMP_ARCH_PPC || KMP_ARCH_AARCH64_32 || KMP_ARCH_SPARC
 
 #if KMP_OS_LINUX || KMP_OS_DRAGONFLY || KMP_OS_FREEBSD || KMP_OS_NETBSD ||     \
     KMP_OS_OPENBSD || KMP_OS_WINDOWS || KMP_OS_HAIKU || KMP_OS_HURD ||         \

@@ -321,7 +321,8 @@ int __kmp_futex_determine_capable() {
 
 #endif // KMP_USE_FUTEX
 
-#if (KMP_ARCH_X86 || KMP_ARCH_X86_64 || KMP_ARCH_WASM) && (!KMP_ASM_INTRINS)
+#if (KMP_ARCH_X86 || KMP_ARCH_X86_64 || KMP_ARCH_WASM32 || KMP_ARCH_WASM64) && \
+    (!KMP_ASM_INTRINS)
 /* Only 32-bit "add-exchange" instruction on IA-32 architecture causes us to
    use compare_and_store for these routines */
 
@@ -381,7 +382,7 @@ kmp_uint32 __kmp_test_then_and32(volatile kmp_uint32 *p, kmp_uint32 d) {
   return old_value;
 }
 
-#if KMP_ARCH_X86 || KMP_ARCH_WASM
+#if KMP_ARCH_X86 || KMP_ARCH_WASM32
 kmp_int8 __kmp_test_then_add8(volatile kmp_int8 *p, kmp_int8 d) {
   kmp_int8 old_value, new_value;
 
@@ -2777,6 +2778,48 @@ typedef void (*microtask_t14)(int *, int *, void *, void *, void *, void *,
 typedef void (*microtask_t15)(int *, int *, void *, void *, void *, void *,
                               void *, void *, void *, void *, void *, void *,
                               void *, void *, void *, void *, void *);
+typedef void (*microtask_t16)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *);
+typedef void (*microtask_t17)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *);
+typedef void (*microtask_t18)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *);
+typedef void (*microtask_t19)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *);
+typedef void (*microtask_t20)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *);
+typedef void (*microtask_t21)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *);
+typedef void (*microtask_t22)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *);
+typedef void (*microtask_t23)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *);
+typedef void (*microtask_t24)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *);
+typedef void (*microtask_t25)(int *, int *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *, void *, void *, void *,
+                              void *, void *, void *);
 
 // we really only need the case with 1 argument, because CLANG always build
 // a struct of pointers to shared variables referenced in the outlined function
@@ -2867,6 +2910,76 @@ int __kmp_invoke_microtask(microtask_t pkfn, int gtid, int tid, int argc,
                            p_argv[3], p_argv[4], p_argv[5], p_argv[6],
                            p_argv[7], p_argv[8], p_argv[9], p_argv[10],
                            p_argv[11], p_argv[12], p_argv[13], p_argv[14]);
+    break;
+  case 16:
+    (*(microtask_t16)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15]);
+    break;
+  case 17:
+    (*(microtask_t17)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15], p_argv[16]);
+    break;
+  case 18:
+    (*(microtask_t18)pkfn)(&gtid, &tid, p_argv[0], p_argv[1], p_argv[2],
+                           p_argv[3], p_argv[4], p_argv[5], p_argv[6],
+                           p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+                           p_argv[11], p_argv[12], p_argv[13], p_argv[14],
+                           p_argv[15], p_argv[16], p_argv[17]);
+    break;
+  case 19:
+    (*(microtask_t19)pkfn)(&gtid, &tid, p_argv[0], p_argv[1], p_argv[2],
+                           p_argv[3], p_argv[4], p_argv[5], p_argv[6],
+                           p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+                           p_argv[11], p_argv[12], p_argv[13], p_argv[14],
+                           p_argv[15], p_argv[16], p_argv[17], p_argv[18]);
+    break;
+  case 20:
+    (*(microtask_t20)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15], p_argv[16],
+        p_argv[17], p_argv[18], p_argv[19]);
+    break;
+  case 21:
+    (*(microtask_t21)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15], p_argv[16],
+        p_argv[17], p_argv[18], p_argv[19], p_argv[20]);
+    break;
+  case 22:
+    (*(microtask_t22)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15], p_argv[16],
+        p_argv[17], p_argv[18], p_argv[19], p_argv[20], p_argv[21]);
+    break;
+  case 23:
+    (*(microtask_t23)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15], p_argv[16],
+        p_argv[17], p_argv[18], p_argv[19], p_argv[20], p_argv[21], p_argv[22]);
+    break;
+  case 24:
+    (*(microtask_t24)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15], p_argv[16],
+        p_argv[17], p_argv[18], p_argv[19], p_argv[20], p_argv[21], p_argv[22],
+        p_argv[23]);
+    break;
+  case 25:
+    (*(microtask_t25)pkfn)(
+        &gtid, &tid, p_argv[0], p_argv[1], p_argv[2], p_argv[3], p_argv[4],
+        p_argv[5], p_argv[6], p_argv[7], p_argv[8], p_argv[9], p_argv[10],
+        p_argv[11], p_argv[12], p_argv[13], p_argv[14], p_argv[15], p_argv[16],
+        p_argv[17], p_argv[18], p_argv[19], p_argv[20], p_argv[21], p_argv[22],
+        p_argv[23], p_argv[24]);
     break;
   }
 

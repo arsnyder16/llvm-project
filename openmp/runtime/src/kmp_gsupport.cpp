@@ -271,8 +271,8 @@ void *KMP_EXPAND_NAME(KMP_API_NAME_GOMP_SINGLE_COPY_START)(void) {
   if (__kmp_enter_single(gtid, &loc, FALSE))
     return NULL;
 
-    // Wait for the first thread to set the copyprivate data pointer,
-    // and for all other threads to reach this point.
+  // Wait for the first thread to set the copyprivate data pointer,
+  // and for all other threads to reach this point.
 
 #if OMPT_SUPPORT && OMPT_OPTIONAL
   ompt_frame_t *ompt_frame;
@@ -357,7 +357,7 @@ void KMP_EXPAND_NAME(KMP_API_NAME_GOMP_ORDERED_END)(void) {
 // They come in two flavors: 64-bit unsigned, and either 32-bit signed
 // (IA-32 architecture) or 64-bit signed (Intel(R) 64).
 
-#if KMP_ARCH_X86 || KMP_ARCH_ARM || KMP_ARCH_MIPS || KMP_ARCH_WASM ||          \
+#if KMP_ARCH_X86 || KMP_ARCH_ARM || KMP_ARCH_MIPS || KMP_ARCH_WASM32 ||        \
     KMP_ARCH_PPC || KMP_ARCH_AARCH64_32 || KMP_ARCH_SPARC32
 #define KMP_DISPATCH_INIT __kmp_aux_dispatch_init_4
 #define KMP_DISPATCH_FINI_CHUNK __kmp_aux_dispatch_fini_chunk_4
@@ -882,7 +882,7 @@ void KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_END)(void) {
 }
 
 void KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_END_NOWAIT)(void) {
-  KA_TRACE(20, ("GOMP_loop_end_nowait: T#%d\n", __kmp_get_gtid()))
+    KA_TRACE(20, ("GOMP_loop_end_nowait: T#%d\n", __kmp_get_gtid()))
 }
 
 // Unsigned long long loop worksharing constructs
@@ -1011,13 +1011,13 @@ LOOP_RUNTIME_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_RUNTIME_START), kmp_sch_runtime)
 LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_RUNTIME_NEXT), {})
 LOOP_RUNTIME_START_ULL(
-    KMP_EXPAND_NAME(
-        KMP_API_NAME_GOMP_LOOP_ULL_MAYBE_NONMONOTONIC_RUNTIME_START),
+                KMP_EXPAND_NAME(
+                    KMP_API_NAME_GOMP_LOOP_ULL_MAYBE_NONMONOTONIC_RUNTIME_START),
     kmp_sch_runtime)
 LOOP_RUNTIME_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_NONMONOTONIC_RUNTIME_START),
-    kmp_sch_runtime)
-LOOP_NEXT_ULL(
+                                                        kmp_sch_runtime)
+                LOOP_NEXT_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_MAYBE_NONMONOTONIC_RUNTIME_NEXT),
     {})
 LOOP_NEXT_ULL(
@@ -1029,16 +1029,16 @@ LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_STATIC_NEXT),
               { KMP_DISPATCH_FINI_CHUNK_ULL(&loc, gtid); })
 LOOP_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_DYNAMIC_START),
-    kmp_ord_dynamic_chunked)
+                                          kmp_ord_dynamic_chunked)
 LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_DYNAMIC_NEXT),
               { KMP_DISPATCH_FINI_CHUNK_ULL(&loc, gtid); })
 LOOP_START_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_GUIDED_START),
-               kmp_ord_guided_chunked)
+                                              kmp_ord_guided_chunked)
 LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_GUIDED_NEXT),
               { KMP_DISPATCH_FINI_CHUNK_ULL(&loc, gtid); })
 LOOP_RUNTIME_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_RUNTIME_START),
-    kmp_ord_runtime)
+                                                          kmp_ord_runtime)
 LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_RUNTIME_NEXT),
               { KMP_DISPATCH_FINI_CHUNK_ULL(&loc, gtid); })
 
@@ -1139,18 +1139,18 @@ LOOP_NEXT_ULL(KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_ORDERED_RUNTIME_NEXT),
     return status;                                                             \
   }
 
-LOOP_DOACROSS_START_ULL(
+                                    LOOP_DOACROSS_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_STATIC_START),
-    kmp_sch_static)
-LOOP_DOACROSS_START_ULL(
+                                        kmp_sch_static)
+                                        LOOP_DOACROSS_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_DYNAMIC_START),
-    kmp_sch_dynamic_chunked)
-LOOP_DOACROSS_START_ULL(
+                                            kmp_sch_dynamic_chunked)
+                                            LOOP_DOACROSS_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_GUIDED_START),
-    kmp_sch_guided_chunked)
-LOOP_DOACROSS_RUNTIME_START_ULL(
+                                                kmp_sch_guided_chunked)
+                                                LOOP_DOACROSS_RUNTIME_START_ULL(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_LOOP_ULL_DOACROSS_RUNTIME_START),
-    kmp_sch_runtime)
+                                                    kmp_sch_runtime)
 
 // Combined parallel / loop worksharing constructs
 //
@@ -1207,26 +1207,26 @@ LOOP_DOACROSS_RUNTIME_START_ULL(
 
 #endif
 
-PARALLEL_LOOP_START(
+                                                    PARALLEL_LOOP_START(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_STATIC_START),
     kmp_sch_static, OMPT_LOOP_PRE, OMPT_LOOP_POST)
-PARALLEL_LOOP_START(
+                                                        PARALLEL_LOOP_START(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_DYNAMIC_START),
     kmp_sch_dynamic_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
-PARALLEL_LOOP_START(
+                                                            PARALLEL_LOOP_START(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_GUIDED_START),
     kmp_sch_guided_chunked, OMPT_LOOP_PRE, OMPT_LOOP_POST)
-PARALLEL_LOOP_START(
+                                                                PARALLEL_LOOP_START(
     KMP_EXPAND_NAME(KMP_API_NAME_GOMP_PARALLEL_LOOP_RUNTIME_START),
     kmp_sch_runtime, OMPT_LOOP_PRE, OMPT_LOOP_POST)
 
-// Tasking constructs
+    // Tasking constructs
 
 void KMP_EXPAND_NAME(KMP_API_NAME_GOMP_TASK)(void (*func)(void *), void *data,
                                              void (*copy_func)(void *, void *),
                                              long arg_size, long arg_align,
                                              bool if_cond, unsigned gomp_flags,
-                                             void **depend) {
+        void **depend) {
   MKLOC(loc, "GOMP_task");
   int gtid = __kmp_entry_gtid();
   kmp_int32 flags = 0;
